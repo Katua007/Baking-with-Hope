@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baking-with-Hope</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        function showExamples(category) {
+            const modal = document.getElementById('examples-modal');
+            const title = document.getElementById('examples-modal-title');
+            const gallery = document.getElementById('examples-gallery');
+            
+            const examples = {
+                'cookies': [{ img: 'Images/Cookies.jpeg', name: 'Cookies' }],
+                'fondants': [{ img: 'Images/Customized Fondants.jpeg', name: 'Customized Fondants' }],
+                'birthday-cakes': [
+                    { img: 'Images/Use this as examples for the Customized Birthday Cakes/Birthday cake examples.jpeg', name: 'Birthday Cake Example 1' },
+                    { img: 'Images/Use this as examples for the Customized Birthday Cakes/Birthday cake examples2.jpeg', name: 'Birthday Cake Example 2' },
+                    { img: 'Images/Use this as examples for the Customized Birthday Cakes/Birthday cake examples3.jpeg', name: 'Birthday Cake Example 3' },
+                    { img: 'Images/Use this as examples for the Customized Birthday Cakes/Birthday cake examples4.jpeg', name: 'Birthday Cake Example 4' }
+                ],
+                'graduation-cakes': [
+                    { img: 'Images/Use this as the examples of Graduation Cakes/Graduation cake examples.jpeg', name: 'Graduation Cake Example 1' },
+                    { img: 'Images/Use this as the examples of Graduation Cakes/Graduation cake examples2.jpeg', name: 'Graduation Cake Example 2' }
+                ],
+                'honey-buns': [{ img: 'Images/Honey Buns.jpeg', name: 'Honey Buns' }],
+                'special-cakes': [
+                    { img: 'Images/Use this as the examples for Hope Special Cakes/Special Cake examples.jpeg', name: 'Special Cake Example 1' },
+                    { img: 'Images/Use this as the examples for Hope Special Cakes/Special Cake examples2.jpeg', name: 'Special Cake Example 2' },
+                    { img: 'Images/Use this as the examples for Hope Special Cakes/Special Cake examples3.jpeg', name: 'Special Cake Example 3' },
+                    { img: 'Images/Use this as the examples for Hope Special Cakes/Special Cake examples4.jpeg', name: 'Special Cake Example 4' },
+                    { img: 'Images/Use this as the examples for Hope Special Cakes/Special Cake examples5.jpeg', name: 'Special Cake Example 5' },
+                    { img: 'Images/Use this as the examples for Hope Special Cakes/Special cake examples6.jpeg', name: 'Special Cake Example 6' },
+                    { img: 'Images/Use this as the examples for Hope Special Cakes/Special Cake examples7.jpeg', name: 'Special Cake Example 7' },
+                    { img: 'Images/Use this as the examples for Hope Special Cakes/Special Cake examples8.jpeg', name: 'Special Cake Example 8' }
+                ],
+                'mahamri': [{ img: 'Images/Mahamri.jpeg', name: 'Mahamri' }],
+                'samosas': [{ img: 'Images/Samosas.jpeg', name: 'Samosas' }],
+                'ceremonies': [
+                    { img: 'Images/Use this as examples for the Setting up for Ceremonies/Ceremonial cake examples.jpeg', name: 'Ceremonial Setup Example 1' },
+                    { img: 'Images/Use this as examples for the Setting up for Ceremonies/Ceremonial cake examples2.jpeg', name: 'Ceremonial Setup Example 2' },
+                    { img: 'Images/Use this as examples for the Setting up for Ceremonies/Ceremonial cake examples3.jpeg', name: 'Ceremonial Setup Example 3' }
+                ]
+            };
+            
+            const categoryNames = {
+                'cookies': 'Cookies',
+                'fondants': 'Customized Fondants',
+                'birthday-cakes': 'Birthday Cakes',
+                'graduation-cakes': 'Graduation Cakes',
+                'honey-buns': 'Honey Buns',
+                'special-cakes': 'Hope Special Cakes',
+                'mahamri': 'Mahamri',
+                'samosas': 'Samosas',
+                'ceremonies': 'Ceremony Setup'
+            };
+            title.textContent = categoryNames[category] + ' Examples';
+            gallery.innerHTML = examples[category].map(item => 
+                `<div class="example-item">
+                    <img src="${item.img}" alt="${item.name}">
+                    <button class="order-like-this-btn" onclick="orderLikeThis('${item.name}')">Order Like This</button>
+                </div>`
+            ).join('');
+            
+            modal.classList.add('active');
+        }
+        
+        function orderLikeThis(productName) {
+            showOrderForm(productName);
+            window.closeModal('examples-modal');
+        }
+        
+        function showOrderForm(productName = '') {
+            const modal = document.getElementById('order-form-modal');
+            const productSelect = document.getElementById('order-category');
+            if (productName) {
+                productSelect.value = getProductCategory(productName);
+                updateFlavors();
+            }
+            modal.classList.add('active');
+        }
+        
+        function getProductCategory(productName) {
+            const categoryMap = {
+                'Cookies': 'cookies',
+                'Customized Fondants': 'cakes',
+                'Birthday Cake': 'cakes',
+                'Graduation Cake': 'cakes',
+                'Honey Buns': 'pastries',
+                'Special Cake': 'cakes',
+                'Mahamri': 'pastries',
+                'Samosas': 'savory',
+                'Ceremonial': 'cakes'
+            };
+            for (let key in categoryMap) {
+                if (productName.includes(key)) return categoryMap[key];
+            }
+            return 'cakes';
+        }
+        
+        function updateFlavors() {
+            const category = document.getElementById('order-category').value;
+            const flavorSelect = document.getElementById('order-flavor');
+            
+            const flavors = {
+                'cakes': ['Vanilla', 'Chocolate', 'Strawberry', 'Red Velvet', 'Lemon', 'Carrot', 'Coconut'],
+                'cookies': ['Chocolate Chip', 'Oatmeal', 'Sugar', 'Peanut Butter', 'Ginger', 'Shortbread'],
+                'pastries': ['Plain', 'Coconut', 'Cardamom', 'Cinnamon', 'Honey Glazed'],
+                'savory': ['Beef', 'Chicken', 'Vegetable', 'Cheese', 'Spiced Potato']
+            };
+            
+            flavorSelect.innerHTML = '<option value="">Select flavor...</option>' + 
+                flavors[category].map(flavor => `<option value="${flavor}">${flavor}</option>`).join('');
+        }
+        
+        function showAuthModal(isLogin = true) {
+            const modal = document.getElementById('auth-modal');
+            const title = document.getElementById('auth-modal-title');
+            const submitBtn = document.getElementById('auth-submit-button');
+            const toggleText = document.getElementById('auth-toggle-text');
+            const toggleLink = document.getElementById('auth-toggle-link');
+            
+            if (isLogin) {
+                title.textContent = 'Login';
+                submitBtn.textContent = 'Login';
+                toggleText.textContent = "Don't have an account? ";
+                toggleLink.textContent = 'Sign Up';
+            } else {
+                title.textContent = 'Sign Up';
+                submitBtn.textContent = 'Sign Up';
+                toggleText.textContent = 'Already have an account? ';
+                toggleLink.textContent = 'Login';
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function socialLogin(provider) {
+            alert(`Redirecting to ${provider} login...`);
+            setTimeout(() => {
+                simulateLogin(`user@${provider.toLowerCase()}.com`);
+            }, 1000);
+        }
+        
+        function simulateLogin(email) {
+            document.getElementById('user-id-display').textContent = email;
+            document.getElementById('user-info').style.display = 'inline';
+            document.getElementById('login-button').style.display = 'none';
+            document.getElementById('signup-button').style.display = 'none';
+            document.getElementById('logout-button').style.display = 'inline';
+            window.closeModal('auth-modal');
+        }
+        
+        function logout() {
+            document.getElementById('user-info').style.display = 'none';
+            document.getElementById('login-button').style.display = 'inline';
+            document.getElementById('signup-button').style.display = 'inline';
+            document.getElementById('logout-button').style.display = 'none';
+        }
+        
+        function showSocialPromoOffer() {
+            const modal = document.getElementById('social-promo-modal');
+            modal.classList.add('active');
+        }
+        
+        function acceptSocialPromo() {
+            const couponCode = 'SOCIAL15-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            document.getElementById('coupon-code-display').textContent = couponCode;
+            document.getElementById('social-promo-content').style.display = 'none';
+            document.getElementById('coupon-success-content').style.display = 'block';
+            
+            // Store coupon in localStorage (in real app, this would be in database)
+            localStorage.setItem('socialPromoCoupon', couponCode);
+        }
+        
+        function declineSocialPromo() {
+            window.closeModal('social-promo-modal');
+        }
+        
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        };
+        
+        // Add event listener when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('custom-order-btn').addEventListener('click', function() {
+                document.getElementById('custom-order-modal').classList.add('active');
+            });
+            
+            // Add order now button listeners
+            document.querySelectorAll('.product-card button:last-child').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productName = this.closest('.product-card').querySelector('h3').textContent;
+                    showOrderForm(productName);
+                });
+            });
+            
+            // Auth button listeners
+            document.getElementById('login-button').addEventListener('click', () => showAuthModal(true));
+            document.getElementById('signup-button').addEventListener('click', () => showAuthModal(false));
+            document.getElementById('logout-button').addEventListener('click', logout);
+            
+            // Auth form submission
+            document.getElementById('auth-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('auth-email').value;
+                simulateLogin(email);
+            });
+            
+            // Toggle between login and signup
+            document.getElementById('auth-toggle-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                const isCurrentlyLogin = document.getElementById('auth-modal-title').textContent === 'Login';
+                showAuthModal(!isCurrentlyLogin);
+            });
+            
+            // Order form submission
+            document.getElementById('order-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Order placed successfully!');
+                window.closeModal('order-form-modal');
+                // Show social media promotion offer
+                setTimeout(() => {
+                    showSocialPromoOffer();
+                }, 1000);
+            });
+            
+            // Custom order form submission
+            document.getElementById('custom-order-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Custom order submitted successfully!');
+                window.closeModal('custom-order-modal');
+                // Show social media promotion offer
+                setTimeout(() => {
+                    showSocialPromoOffer();
+                }, 1000);
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo">Baking-with-Hope</div>
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact-social">Contact</a></li>
+                <li><a href="#" id="orders-nav-link" style="display: none;">Orders (Baker)</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <span id="user-info">Logged in as: <span id="user-id-display"></span></span>
+            <button id="login-button">Login</button>
+            <button id="signup-button">Sign Up</button>
+            <button id="logout-button" style="display: none;">Logout</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section id="hero">
+            <h1>Welcome to Baking-with-Hope!</h1>
+            <p>Your one-stop shop for delicious, freshly baked treats, delivered right to your doorstep with love and care.</p>
+            <button onclick="document.getElementById('products').scrollIntoView()">Browse Our Products</button>
+        </section>
+
+        <!-- Baker Controls (visible for logged-in users who can upload products/view orders) -->
+        <section id="baker-controls" class="baker-controls" style="display: none;">
+            <h2>Baker's Dashboard</h2>
+            <button id="add-product-button">Add New Product</button>
+            <button id="view-orders-button">View Customer Orders</button>
+            <button id="manage-social-button">Manage Social Links</button>
+            <div id="social-link-management" style="display: none; margin-top: 20px; background-color: white; padding: 20px; border-radius: var(--border-radius);">
+                <h3>Manage Social Media Links</h3>
+                <div class="form-group">
+                    <label for="instagram-link">Instagram URL:</label>
+                    <input type="text" id="instagram-link" placeholder="e.g., https://instagram.com/bakingwithhope">
+                </div>
+                <div class="form-group">
+                    <label for="facebook-link">Facebook URL:</label>
+                    <input type="text" id="facebook-link" placeholder="e.g., https://facebook.com/bakingwithhope">
+                </div>
+                <button id="save-social-links">Save Social Links</button>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products">
+            <h2>Our Delicious Products</h2>
+            <div class="custom-order-container">
+                <button id="custom-order-btn" class="custom-order-button">
+                    <i class="fas fa-plus"></i> Place Custom Order
+                </button>
+            </div>
+            <div class="product-grid" id="product-list">
+                <div class="product-card">
+                    <img src="Images/Cookies.jpeg" alt="Cookies">
+                    <div class="product-card-content">
+                        <h3>Cookies</h3>
+                        <button onclick="showExamples('cookies')">Explore</button>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="Images/Customized Fondants.jpeg" alt="Customized Fondants">
+                    <div class="product-card-content">
+                        <h3>Customized Fondants</h3>
+                        <button onclick="showExamples('fondants')">Explore</button>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="Images/Customized Birthday Cakes .jpeg" alt="Customized Birthday Cakes">
+                    <div class="product-card-content">
+                        <h3>Customized Birthday Cakes</h3>
+                        <button onclick="showExamples('birthday-cakes')">Explore</button>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="Images/Graduation cakes.jpeg" alt="Graduation Cakes">
+                    <div class="product-card-content">
+                        <h3>Graduation Cakes</h3>
+                        <button onclick="showExamples('graduation-cakes')">Explore</button>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="Images/Honey Buns.jpeg" alt="Honey Buns">
+                    <div class="product-card-content">
+                        <h3>Honey Buns</h3>
+                        <button onclick="showExamples('honey-buns')">Explore</button>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="Images/Hope Special Cakes.jpeg" alt="Hope Special Cakes">
+                    <div class="product-card-content">
+                        <h3>Hope Special Cakes</h3>
+                        <button onclick="showExamples('special-cakes')">Explore</button>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="Images/Mahamri.jpeg" alt="Mahamri">
+                    <div class="product-card-content">
+                        <h3>Mahamri</h3>
+                        <button onclick="showExamples('mahamri')">Explore</button>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="Images/Samosas.jpeg" alt="Samosas">
+                    <div class="product-card-content">
+                        <h3>Samosas</h3>
+                        <button onclick="showExamples('samosas')">Explore</button>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="Images/Setting up for ceremonies.jpeg" alt="Setting up for Ceremonies">
+                    <div class="product-card-content">
+                        <h3>Setting up for Ceremonies</h3>
+                        <button onclick="showExamples('ceremonies')">Explore</button>
+                        <button>Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Orders Section (Hidden by default, visible to baker) -->
+        <section id="orders-baker-section">
+            <h2>Customer Orders (Real-time)</h2>
+            <div id="orders-list">
+                <p>No orders yet!</p>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reviews">
+            <h2>What Our Customers Say</h2>
+            <div class="review-list" id="review-list">
+                <!-- Reviews will be loaded here by JavaScript -->
+            </div>
+            <h3>Leave a Review</h3>
+            <form id="review-form">
+                <div class="form-group">
+                    <label for="review-product-select">Product Ordered:</label>
+                    <select id="review-product-select" required>
+                        <option value="">Select a product...</option>
+                        <option value="Cookies">Cookies</option>
+                        <option value="Customized Fondants">Customized Fondants</option>
+                        <option value="Customized Birthday Cakes">Customized Birthday Cakes</option>
+                        <option value="Graduation Cakes">Graduation Cakes</option>
+                        <option value="Honey Buns">Honey Buns</option>
+                        <option value="Hope Special Cakes">Hope Special Cakes</option>
+                        <option value="Mahamri">Mahamri</option>
+                        <option value="Samosas">Samosas</option>
+                        <option value="Setting up for Ceremonies">Setting up for Ceremonies</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="review-text">Your Review:</label>
+                    <textarea id="review-text" placeholder="Share your thoughts on the product..." required></textarea>
+                </div>
+                <button type="submit" id="submit-review-button">Submit Review</button>
+            </form>
+        </section>
+
+        <!-- Contact & Social Section -->
+        <section id="contact-social">
+            <h2>Connect With Us</h2>
+            <p>Have questions or special requests? Reach out to us!</p>
+            <p>Email: <a href="mailto:hopeepicure@gmail.com">hopeepicure@gmail.com</a></p>
+            <p>Phone: <a href="tel:+254726004093">+254 726 004093</a></p>
+            <p>Whatsapp: <a href="https://wa.me/254726004093" target="_blank">+254 726 004093</a></p>
+            <div class="social-links" id="dynamic-social-links">
+                <!-- Social links will be loaded here by JavaScript -->
+                <a href="#" target="_blank" style="display:none;" id="instagram-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" style="display:none;" id="facebook-icon"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.tiktok.com/@hope.epicure?is_from_webapp=1&sender_device=pc" target="_blank" id="tiktok-icon"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Baking-with-Hope. All rights reserved.</p>
+        <p>Follow us on social media for amazing deals!</p>
+    </footer>
+
+    <!-- Login/Sign Up Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-content auth-modal-content">
+            <button class="modal-close-button" onclick="window.closeModal('auth-modal')">&times;</button>
+            <h2 id="auth-modal-title">Login</h2>
+            
+            <!-- Social Login Buttons -->
+            <div class="social-auth-buttons">
+                <button type="button" class="social-btn google-btn" onclick="socialLogin('Google')">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                <button type="button" class="social-btn apple-btn" onclick="socialLogin('Apple')">
+                    <i class="fab fa-apple"></i> Continue with Apple
+                </button>
+                <button type="button" class="social-btn facebook-btn" onclick="socialLogin('Facebook')">
+                    <i class="fab fa-facebook-f"></i> Continue with Facebook
+                </button>
+                <button type="button" class="social-btn twitter-btn" onclick="socialLogin('X')">
+                    <i class="fab fa-x-twitter"></i> Continue with X
+                </button>
+            </div>
+            
+            <div class="auth-divider">
+                <span>or</span>
+            </div>
+            
+            <!-- Email Login Form -->
+            <form id="auth-form">
+                <div class="form-group">
+                    <label for="auth-email">Email:</label>
+                    <input type="email" id="auth-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="auth-password">Password:</label>
+                    <input type="password" id="auth-password" required>
+                </div>
+                <button type="submit" id="auth-submit-button">Login</button>
+            </form>
+            
+            <div class="auth-toggle">
+                <span id="auth-toggle-text">Don't have an account? </span>
+                <a href="#" id="auth-toggle-link">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="order-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="window.closeModal('order-modal')">&times;</button>
+            <h2>Order <span id="order-product-name"></span></h2>
+            <form id="order-form">
+                <div class="form-group">
+                    <label for="customer-name">Your Name:</label>
+                    <input type="text" id="customer-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-phone">Phone Number:</label>
+                    <input type="text" id="customer-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-date">Desired Delivery Date:</label>
+                    <input type="date" id="delivery-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-time">Desired Delivery Time:</label>
+                    <input type="time" id="delivery-time" required>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-location">Delivery Location:</label>
+                    <textarea id="delivery-location" placeholder="e.g., House No. 123, Street Name, City" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="product-quantity">Quantity:</label>
+                    <input type="number" id="product-quantity" value="1" min="1" required>
+                </div>
+
+                <h3>Payment Options:</h3>
+                <div class="payment-options">
+                    <button type="button" id="pay-mpesa-button">Pay with M-Pesa</button>
+                    <button type="button" id="pay-paypal-button">Pay with PayPal</button>
+                    <button type="button" id="pay-card-button">Pay with Card</button>
+                </div>
+                <button type="submit" id="finalize-order-button" style="display: none;">Finalize Order (Payment Pending)</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div id="message-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="window.closeModal('message-modal')">&times;</button>
+            <h2 id="message-modal-title"></h2>
+            <p id="message-modal-text"></p>
+            <button onclick="window.closeModal('message-modal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Examples Modal -->
+    <div id="examples-modal" class="modal-overlay">
+        <div class="modal-content examples-modal-content">
+            <button class="modal-close-button" onclick="window.closeModal('examples-modal')">&times;</button>
+            <h2 id="examples-modal-title">Examples</h2>
+            <div id="examples-gallery" class="examples-gallery">
+                <!-- Examples will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Form Modal -->
+    <div id="order-form-modal" class="modal-overlay">
+        <div class="modal-content order-form-content">
+            <button class="modal-close-button" onclick="window.closeModal('order-form-modal')">&times;</button>
+            <h2>Place Your Order</h2>
+            <form id="order-form">
+                <div class="form-group">
+                    <label for="order-category">Category:</label>
+                    <select id="order-category" onchange="updateFlavors()" required>
+                        <option value="">Select category...</option>
+                        <option value="cakes">Cakes</option>
+                        <option value="cookies">Cookies</option>
+                        <option value="pastries">Pastries</option>
+                        <option value="savory">Savory Items</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="order-weight">Amount (kg):</label>
+                    <input type="number" id="order-weight" min="0.1" step="0.1" placeholder="e.g., 1.5" required>
+                </div>
+                <div class="form-group">
+                    <label>Taste Preference:</label>
+                    <div class="taste-options">
+                        <label><input type="radio" name="taste" value="spicy" required> Spicy</label>
+                        <label><input type="radio" name="taste" value="sweet" required> Sweet</label>
+                        <label><input type="radio" name="taste" value="zero-sugar" required> Zero Sugar</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="order-flavor">Flavor:</label>
+                    <select id="order-flavor" required>
+                        <option value="">Select flavor...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="order-customer-name">Your Name:</label>
+                    <input type="text" id="order-customer-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="order-customer-phone">Phone Number:</label>
+                    <input type="tel" id="order-customer-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="order-delivery-date">Delivery Date:</label>
+                    <input type="date" id="order-delivery-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="order-delivery-address">Delivery Address:</label>
+                    <textarea id="order-delivery-address" placeholder="Enter your full delivery address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="order-special-notes">Special Instructions (Optional):</label>
+                    <textarea id="order-special-notes" placeholder="Any special decorations, messages, or requirements"></textarea>
+                </div>
+                <button type="submit">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Order Modal -->
+    <div id="custom-order-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="window.closeModal('custom-order-modal')">&times;</button>
+            <h2>Place Custom Order</h2>
+            <form id="custom-order-form">
+                <div class="form-group">
+                    <label for="custom-product-type">Product Type:</label>
+                    <select id="custom-product-type" required>
+                        <option value="">Select product type...</option>
+                        <option value="cake">Cake</option>
+                        <option value="cookies">Cookies</option>
+                        <option value="pastry">Pastry</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="custom-flavor">Flavor:</label>
+                    <input type="text" id="custom-flavor" placeholder="e.g., Chocolate, Vanilla, Strawberry" required>
+                </div>
+                <div class="form-group">
+                    <label for="custom-size">Size:</label>
+                    <select id="custom-size" required>
+                        <option value="">Select size...</option>
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                        <option value="extra-large">Extra Large</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="custom-description">Special Requirements:</label>
+                    <textarea id="custom-description" placeholder="Describe your custom requirements, decorations, text, etc." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="custom-customer-name">Your Name:</label>
+                    <input type="text" id="custom-customer-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="custom-customer-phone">Phone Number:</label>
+                    <input type="text" id="custom-customer-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="custom-delivery-date">Desired Delivery Date:</label>
+                    <input type="date" id="custom-delivery-date" required>
+                </div>
+                <button type="submit">Submit Custom Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Social Media Promotion Modal -->
+    <div id="social-promo-modal" class="modal-overlay">
+        <div class="modal-content social-promo-content">
+            <button class="modal-close-button" onclick="declineSocialPromo()">&times;</button>
+            
+            <div id="social-promo-content">
+                <h2><i class="fas fa-gift"></i> Special Offer!</h2>
+                <div class="promo-text">
+                    <p><strong>Get 15% OFF your next order!</strong></p>
+                    <p>Post a photo of your delivered product on your social media pages and tag us <strong>@BakingWithHope</strong> to receive a 15% discount coupon for your next order.</p>
+                    <div class="promo-details">
+                        <h4>How it works:</h4>
+                        <ul>
+                            <li>Take a photo of your delivered product</li>
+                            <li>Post it on Instagram, Facebook, or X (Twitter)</li>
+                            <li>Tag <strong>@BakingWithHope</strong> in your post</li>
+                            <li>Get your 15% discount coupon instantly!</li>
+                        </ul>
+                        <p class="promo-note"><em>*Coupon is valid for one-time use only and expires in 30 days</em></p>
+                    </div>
+                </div>
+                <div class="promo-buttons">
+                    <button onclick="acceptSocialPromo()" class="accept-btn">Yes, I'll Post & Get 15% OFF!</button>
+                    <button onclick="declineSocialPromo()" class="decline-btn">No Thanks</button>
+                </div>
+            </div>
+            
+            <div id="coupon-success-content" style="display: none;">
+                <h2><i class="fas fa-check-circle"></i> Coupon Generated!</h2>
+                <div class="coupon-display">
+                    <p>Your 15% discount coupon code:</p>
+                    <div class="coupon-code">
+                        <span id="coupon-code-display"></span>
+                    </div>
+                    <p class="coupon-instructions">
+                        Save this code and use it on your next order!<br>
+                        <em>Valid for 30 days, one-time use only.</em>
+                    </p>
+                </div>
+                <button onclick="window.closeModal('social-promo-modal')" class="close-success-btn">Got It!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Upload Modal -->
+    <div id="product-upload-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="window.closeModal('product-upload-modal')">&times;</button>
+            <h2>Add New Baking Product</h2>
+            <form id="product-upload-form">
+                <div class="form-group">
+                    <label for="new-product-name">Product Name:</label>
+                    <input type="text" id="new-product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-product-ingredients">Ingredients:</label>
+                    <textarea id="new-product-ingredients" placeholder="List main ingredients..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="new-product-image-url">Image URL:</label>
+                    <input type="text" id="new-product-image-url" placeholder="e.g., https://placehold.co/400x300/E57373/FFFFFF?text=Cake" required>
+                    <small>Provide a direct image URL (e.g., from an image hosting service or a placeholder).</small>
+                </div>
+                <button type="submit">Upload Product</button>
+            </form>
+        </div>
+    </div>
+
+  
+</body>
+</html>
