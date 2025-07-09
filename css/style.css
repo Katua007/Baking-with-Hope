@@ -159,17 +159,33 @@
         }
 
         /* Hero Section */
-        #hero {
-            text-align: center;
-            padding: 100px 20px;
-            min-height: 400px;
+          #hero {
+            position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: url('../Images/Hope epicure Logo.jpeg') no-repeat center center;
-            background-size: cover;
-            position: relative;
+            justify-content: flex-end;    /* Align content to the bottom */
+            align-items: center;          /* Center horizontally */
+            height: 70vh;                 /* Adjust as needed */
+            min-height: 400px;
+            background: url('../Images/Hope epicure Logo.jpeg') center center/cover no-repeat;
+            padding-bottom: 40px;         /* Space from bottom for button */
+            text-align: center;
+        }
+
+        #hero .browse-products-btn {
+            padding: 1em 2em;
+            font-size: 1.2em;
+            background-color: #e57373;    /* Example color, adjust as needed */
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            transition: background 0.2s;
+        }
+
+        #hero .browse-products-btn:hover {
+            background-color: #c62828;
         }
         
         #hero::before {
