@@ -963,6 +963,7 @@
                 </div>
             </div>
             
+
             <div id="coupon-success-content" style="display: none;">
                 <h2><i class="fas fa-check-circle"></i> Coupon Generated!</h2>
                 <div class="coupon-display">
@@ -979,6 +980,48 @@
             </div>
         </div>
     </div>
+
+            // Custom order form submission
+            document.getElementById('custom-order-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Custom order submitted successfully!');
+                window.closeModal('custom-order-modal');
+                // Show social media promotion offer
+                setTimeout(() => {
+                    showSocialPromoOffer();
+                }, 1000);
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo">Hope Epicure</div>
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact-social">Contact</a></li>
+                <li><a href="#" id="orders-nav-link" style="display: none;">Orders (Baker)</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <span id="user-info">Logged in as: <span id="user-id-display"></span></span>
+            <button id="login-button">Login</button>
+            <button id="signup-button">Sign Up</button>
+            <button id="logout-button" style="display: none;">Logout</button>
+        </div>
+    </header>
+    
+   <main class="container">
+        <!-- Hero Section -->
+        <section id="hero">
+          <h1></h1>
+          <p></p>
+          <button class="browse-products-btn" onclick="document.getElementById('products').scrollIntoView()">Browse Our Products</button>
+        </section>
+
 
     <!-- Product Upload Modal -->
     <div id="product-upload-modal" class="modal-overlay">
@@ -1082,7 +1125,7 @@
                     </div>
                 </div>
                 <div class="product-card">
-                    <img src="Images/Samosas.jpeg" alt="Samosas">
+                    <img src="Images/SAMOSA.jpeg" alt="Samosas">
                     <div class="product-card-content">
                         <h3>Samosas</h3>
                         <button onclick="showExamples('samosas')">Explore</button>
