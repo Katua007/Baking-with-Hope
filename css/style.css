@@ -98,7 +98,12 @@
 
         /* Header */
         header {
-            background-color: var(--primary-color);
+            background: linear-gradient(rgba(255, 145, 0, 0.6), rgba(255, 145, 0, 0.6)), url('../Images/Hope epicure Logo.jpeg') center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: scroll;
+            min-height: 70px;
             color: white;
             padding: 15px 0;
             position: sticky;
@@ -159,7 +164,9 @@
         }
 
         /* Hero Section */
+
           #hero {
+
             position: relative;
             display: flex;
             flex-direction: column;
